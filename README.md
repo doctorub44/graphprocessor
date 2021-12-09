@@ -112,7 +112,7 @@ func main() {
 	graph.RegisterAspect(graphnames[0], END, 	IOCDataToJson, 	&end)
 	graph.RegisterAspect(graphnames[0], END, 	IOCDataToJson, 	&duration)
 
-	err      = graph.Execute(graphid[0], NewPayload())
+	err      = graph.Execute(graphnames[0], NewPayload())
 
 	time.Sleep(2000 * time.Millisecond)
 }
