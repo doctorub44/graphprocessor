@@ -1,0 +1,461 @@
+Skip to main content
+United States Flag
+An official website of the United States government Here's how you know 
+
+Toggle navigation
+US Department of Homeland Security CISA Cyber + Infrastructure
+More Analysis Reports
+Malware Analysis Report (AR21-126B)
+MAR-10324784-1.v1: FiveHands Ransomware
+Original release date: May 06, 2021
+Click to print.
+Click to Tweet.
+Click to send to Facebook.
+Click to Share.
+Notification
+This report is provided "as is" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained herein. The DHS does not endorse any commercial product or service referenced in this bulletin or otherwise.
+
+This document is marked TLP:WHITE--Disclosure is not limited. Sources may use TLP:WHITE when information carries minimal or no foreseeable risk of misuse, in accordance with applicable rules and procedures for public release. Subject to standard copyright rules, TLP:WHITE information may be distributed without restriction. For more information on the Traffic Light Protocol (TLP), see http://www.us-cert.gov/tlp.
+
+Summary
+Description
+This Malware Analysis Report (MAR) is the result of analytic efforts by the Cybersecurity and Infrastructure Security Agency (CISA) to provide detailed analysis of 18 malicious files submitted to CISA. Eight of the files are open-source penetration testing and exploitation tools, one file is a new ransomware variant, which CISA refers to as FiveHands. The remaining files are associated with the SombRAT remote access trojan (RAT).
+
+CISA is aware of a recent successful cyberattack against an organization using FiveHands ransomware, SombRAT, and open-source tools to ultimately steal information, obfuscate files, and demand a ransom. For more information, refer to Analysis Report AR21-126A.
+
+CISA is distributing this MAR, which includes suggested response actions and recommended mitigation techniques, to enable network defense and reduce exposure to malicious activity.
+
+For a downloadable copy of IOCs, see: MAR-10324784-1.v1.stix.
+
+Submitted Files (18)
+18229920a45130f00539405fecab500d8010ef93856e1c5bcabf5aa5532b3311 (RouterScan.exe)
+
+2703aba98d6ecf0bf0b5aafe70edc4bc14d223a11021990bfb10acf5641d3a12 (ServeManager.exe)
+
+3337e3875b05e0bfba69ab926532e3f179e8cfbf162ebb60ce58a0281437a7ef (PsExec.exe)
+
+495a0ccc38fb8f22b48025f030617978cf5fdc3df3fed32b1410ad47747ae177 (rclone.exe)
+
+4de1bd4b1bb28ed0897b9d3c5d16a4b1442c7f53cb389cbed82af189696d3f40 (WwanSvc.txt)
+
+5608c12872229acd84f33bf6c667a1b43d112594b2b5f47f923d631bcce6090c (netscan.lic)
+
+5f312e137beb1ce75f8fdf03a59e1b3cba3dc57ccc16e48daee3ee52c08fa149 (s3browser-9-5-3.exe)
+
+7d57e0ba8b36ec221b16807ce4e13a1125d53922fa50c3827a5ebd6811736ffd (grabff.exe)
+
+911a88fe16efca24206f1786242615596e67a9336bc670c1e44a33727987d886 (WwanSvc.c__2)
+
+a710f573f73c163d54c95b4175706329db3ed89cd9337c583d0bb24b6a384789 (netscan.exe)
+
+a7f5097c0d991c9bbd5f2694ec8c9b484e2ab583d362c42c30556f1271cc8aaa (WwanSvc.a__2)
+
+bfc50bf40aae3b41d77169fba45c332b8c60406b403af647f1bb083918a33b9e (59fb3174bb34e803)
+
+c0a214a60daac6f0ba01ce9128d42bb2d8e81909f4b87963de340ab8627a6b0b (WwanSvc.b__2)
+
+c5a1dbb49ff72a69ac7c52b18e57a21527bc381077b1cea12c3a40e9e98ae6cd (WwanSvc.b)
+
+ccacf4658ae778d02e4e55cd161b5a0772eb8b8eee62fed34e2d8f11db2cc4bc (WwanSvc.bat)
+
+d3d5e5a8a40f34fc8d89b2d74d89a4b101d8b95a79e990e3b4161282aa6aca32 (WwanSvc.c)
+
+dec8655cdd7214daf9579ef481d0b0c6ed8120c120d3bd8ec27cb6e1874eb291 (WwanSvc.a)
+
+e4b67b8ffcc1ed95d3ff26622ab4c67a329f76bd76d0f523f5986e67969354b7 (netscan.xml)
+
+Domains (1)
+feticost.com
+
+IPs (1)
+51.89.50.152
+
+Findings
+a710f573f73c163d54c95b4175706329db3ed89cd9337c583d0bb24b6a384789
+Tags
+reconnaissance
+
+Details
+Name netscan.exe
+Size 16539648 bytes
+Type PE32+ executable (GUI) x86-64, for MS Windows
+MD5 132071dc69b875d239f133984655a26a
+SHA1 398d769e0d478175acbdbe9a790b2f6982110e8d
+SHA256 a710f573f73c163d54c95b4175706329db3ed89cd9337c583d0bb24b6a384789
+SHA512 d1263b794b7f0061354f60203a8182d5e34d49347708102712e844f06cd74f4d9d49e2a7e43457b5555a77aefba36c129d2fc01bc7955de277dbe1b0f723cf56
+ssdeep 393216:2qYAOa2Y/FPGk5oEwxnGNqsnFZur3Ilmsi2e2fkK5:vfN
+Entropy 6.000632
+Antivirus
+No matches found.
+
+YARA Rules
+No matches found.
+
+ssdeep Matches
+No matches found.
+
+PE Metadata
+Compile Date 2020-08-06 20:31:49-04:00
+Import Hash 4e157a70f40af9369da3829aa8ddec74
+Company Name SoftPerfect
+File Description Multipurpose IPv4/IPv6 network scanner
+Internal Name None
+Legal Copyright 2003-2020 SoftPerfect Pty Ltd
+Original Filename None
+Product Name SoftPerfect Network Scanner
+Product Version 7.2.9.0
+PE Sections
+MD5 Name Raw Size Entropy
+ad11d214295fb4d9adbd1a066255e7e8 header 1024 2.500134
+fbbeea3396c7ca2cd30104101f97dd27 .text 12265984 5.683312
+d425ff242ca206cce40263fb2d78352e .data 1124352 5.248152
+d41d8cd98f00b204e9800998ecf8427e .bss 0 0.000000
+1e3b134f1ab07c35cd49080aedf68c18 .idata 27648 4.329594
+5d470e5b330b899ac683ef2627311ffa .didata 7168 3.476858
+452453fac6e2a76251515b28f624b92c .edata 512 1.885498
+d41d8cd98f00b204e9800998ecf8427e .tls 0 0.000000
+7a90a77855dd773a08f7d918f96281ff .rdata 512 1.435338
+16417b0690d1cef091d32e0a12f00e3b .pdata 544768 6.558393
+990e366d847735de51e2a9176ecadaec .rsrc 2567680 6.480051
+Relationships
+a710f573f7... Created e4b67b8ffcc1ed95d3ff26622ab4c67a329f76bd76d0f523f5986e67969354b7
+a710f573f7... Related_To 5608c12872229acd84f33bf6c667a1b43d112594b2b5f47f923d631bcce6090c
+Description
+This artifact is a stand-alone version of the SoftPerfect Network Scanner, version 7.2.9 for 64-bit operating systems. Information from the SoftPerfect website follows:
+
+--Begin information--
+"SoftPerfect Network Scanner can ping computers, scan ports, discover shared folders and retrieve practically any information about network devices, via WMI, SNMP, HTTP, SSH and PowerShell. It also scans for remote services, registry, files and performance counters; offers flexible filtering and display options and exports NetScan results to a variety of formats from XML to JSON."
+--End information--
+
+The utility can also be used with Nmap for vulnerability scanning. The utility will generate a report of its findings called 'netscan.xml' (e4b67b8ffcc1ed95d3ff26622ab4c67a329f76bd76d0f523f5986e67969354b7).
+
+e4b67b8ffcc1ed95d3ff26622ab4c67a329f76bd76d0f523f5986e67969354b7
+Tags
+reconnaissance
+
+Details
+Name netscan.xml
+Size 41200 bytes
+Type XML 1.0 document, ASCII text, with CRLF line terminators
+MD5 e1c8bb6fa3e7fe03320313e568c796c4
+SHA1 1ce6808e65b517b3305f397af868168f3f8cd24b
+SHA256 e4b67b8ffcc1ed95d3ff26622ab4c67a329f76bd76d0f523f5986e67969354b7
+SHA512 2a1b9d06d9c6c3b607dc1b5bf48645ef4a47adaff4a193ab77cf416505a8eed8104250bff74de68135cdccb883bff517b71f3c469b77dc06a60c53614cbba0bd
+ssdeep 384:x7noJi3jCFQU6imIyHc+j8/H/fy/fJ/fq/uIpMfBxakR5NmSN1Sv:RnOQXI+j8/H/fy/fJ/fq/uTf7rNmS2v
+Entropy 4.852693
+Antivirus
+No matches found.
+
+YARA Rules
+No matches found.
+
+ssdeep Matches
+No matches found.
+
+Relationships
+e4b67b8ffc... Created_By a710f573f73c163d54c95b4175706329db3ed89cd9337c583d0bb24b6a384789
+Description
+This artifact is an Extensible Markup Language (XML) document reporting scanning results for the SoftPerfect Network Scanner program. The XML document indicates that a random scan was conducted to identify hostnames on a network and search for web servers, file servers, database servers as well as search for any open Remote Desktop Protocol (RDP) ports for several subnets of unroutable Internet Protocol (IP) addresses.
+
+5608c12872229acd84f33bf6c667a1b43d112594b2b5f47f923d631bcce6090c
+Tags
+reconnaissance
+
+Details
+Name netscan.lic
+Size 807 bytes
+Type XML 1.0 document, ASCII text, with very long lines, with CRLF line terminators
+MD5 49bda214f3c635209d2657ca2d395400
+SHA1 55ec058fee5c6eeb0f2a492c444371bc11e2edb8
+SHA256 5608c12872229acd84f33bf6c667a1b43d112594b2b5f47f923d631bcce6090c
+SHA512 a177596594195f83288b94ee6327e7d76bb7465a7745d43eff20609324ee194816c0aa7dd3580c6992536e28361e4e39fb228bb9f449b0bc427fea9e40303d6d
+ssdeep 12:TMGBMWHA+1llfFNKNu9Mdhy96v7C61mnKb3vEjycE1IKV7X5ThQaisyoMkZtE/jQ:3BMY5jPMdnGpKL8cVr5TyoFXmYdz
+Entropy 5.985489
+Antivirus
+No matches found.
+
+YARA Rules
+No matches found.
+
+ssdeep Matches
+No matches found.
+
+Relationships
+5608c12872... Related_To a710f573f73c163d54c95b4175706329db3ed89cd9337c583d0bb24b6a384789
+Description
+To unlock all of the features of the SoftPerfect Network Scanner, a license is required. This artifact is the Network Scanner license that was included with this submission. The license name is 'DeltaFoX'.
+
+3337e3875b05e0bfba69ab926532e3f179e8cfbf162ebb60ce58a0281437a7ef
+Tags
+trojanutility
+
+Details
+Name PsExec.exe
+Size 339096 bytes
+Type PE32 executable (console) Intel 80386, for MS Windows
+MD5 27304b246c7d5b4e149124d5f93c5b01
+SHA1 e50d9e3bd91908e13a26b3e23edeaf577fb3a095
+SHA256 3337e3875b05e0bfba69ab926532e3f179e8cfbf162ebb60ce58a0281437a7ef
+SHA512 bec172a2f92a95796199cfc83f544a78685b52a94061ce0ffb46b265070ee0bcc018c4f548f56018bf3ff1e74952811b2afb6df79ab8d09f1ec73c9477af636b
+ssdeep 3072:Yao79VuJ6titIi/H7ZUFgllxiBD+P5xWr3geNtdS+DlGttzhA9HY4ZUFxPkwlmlP:YaSq4TBWISSTgu7DlGtEC1xn/O5r4S
+Entropy 6.384233
+Antivirus
+Filseclab Trojan.Generic.dlwa
+Sophos App/PsExec-Gen
+YARA Rules
+No matches found.
+
+ssdeep Matches
+No matches found.
+
+PE Metadata
+Compile Date 2016-06-28 14:43:09-04:00
+Import Hash c1e59519b5e5d84af07afa6f5a8625f1
+Company Name Sysinternals - www.sysinternals.com
+File Description Execute processes remotely
+Internal Name PsExec
+Legal Copyright Copyright (C) 2001-2016 Mark Russinovich
+Original Filename psexec.c
+Product Name Sysinternals PsExec
+Product Version 2.2
+PE Sections
+MD5 Name Raw Size Entropy
+7cfa223c41f292fcbcf6b4bc2450b9d8 header 1024 2.762995
+c9b5782085d470d0c2311dc4aaa3e135 .text 99840 6.586757
+c584cc8d01770f418f361866f1875866 .rdata 59392 4.596671
+5172fd3fffd89c75d05b1f62ba527455 .data 9216 2.182345
+bfbb6b1ebaff1f3ff6874d8100f7a64b .rsrc 147456 6.378895
+71d427456a8bd35b3821f185880b287a .reloc 6144 6.631418
+Packers/Compilers/Cryptors
+Microsoft Visual C++ ?.?
+Description
+This artifact is the legitimate remote administration program, called psexec.exe. This tool is part of Microsoft's Sysinternals tool suite. This utility was used to execute the program ServeManager.exe with the following arguments:
+
+---Begin Command Line Arguments---
+psexec.exe -d @comps.txt -s -relatime -c ServeManager.exe -key xxxxxxxxxxxxxxxx
+---End Command Line Arguments---
+
+The above arguments are defined as follows:
+
+---Begin Argument Definitions---
+-d --> Run psexec.exe without any prompts.
+@ --> Remotely access this list of hostnames/IP addresses.
+-s --> Run the program with system level privileges.
+-relatime --> This is a typo. This should be -realtime, or run this process before any other process.
+-c --> Copy the program to the remote system before executing.
+---End Argument Definitions---
+
+2703aba98d6ecf0bf0b5aafe70edc4bc14d223a11021990bfb10acf5641d3a12
+Tags
+dropperobfuscatedtrojan
+
+Details
+Name ServeManager.exe
+Size 253456 bytes
+Type PE32 executable (GUI) Intel 80386, for MS Windows
+MD5 c095498fc44d680ad8b4efeb014d339f
+SHA1 ad571ef3c255c8806a09d50ac504cf4bfce8aca0
+SHA256 2703aba98d6ecf0bf0b5aafe70edc4bc14d223a11021990bfb10acf5641d3a12
+SHA512 029202e8a32f36b8496bb4a09525fa372feec264e9cf1864f469676b7e1560b2bc7917e7799636de8d2e7df7f568e9418c49ac9fa3f1aba91ececd138bcacb51
+ssdeep 6144:tVgUc9JwBsHC/WwblTClkO0hoS19E42nXkBIC:t09WBsH2WwbFCeO0X6XjC
+Entropy 7.609914
+Antivirus
+Ahnlab Malware/Win32.Trojan
+Bitdefender Gen:Variant.Zusy.375932
+ESET a variant of Win32/Filecoder.DeathRansom.F trojan
+Emsisoft Gen:Variant.Zusy.375932 (B)
+Ikarus Trojan-Ransom.DeathRansom
+K7 Riskware ( 0040eff71 )
+Lavasoft Gen:Variant.Zusy.375932
+Microsoft Security Essentials Ransom:Win32/FileCryptor.PAC!MTB
+NANOAV Trojan.Win32.Redcap.itrfgt
+Systweak malware.generic
+VirusBlokAda Trojan.Tiggre
+Zillya! Trojan.Filecoder.Win32.18232
+YARA Rules
+rule CISA_10324784_01 : ransomware trojan loader FIVEHANDS
+{
+   meta:
+       Author = "CISA Code & Media Analysis"
+       Incident = "10324784"
+       Date = "2021-03-23"
+       Last_Modified = "20210323_1100"
+       Actor = "n/a"
+       Category = "Ransomware Trojan Loader"
+       Family = "FIVEHANDS"
+       Description = "Detects Five Hands Ransomware Loader"
+       MD5_1 = "c095498fc44d680ad8b4efeb014d339f"
+       SHA256_1 = "2703aba98d6ecf0bf0b5aafe70edc4bc14d223a11021990bfb10acf5641d3a12"
+   strings:
+       $s0 = { 2D 00 6B 00 65 00 79 }
+       $s1 = "GetCommandLineW"
+       $s2 = "CommandLineToArgvW"
+       $s3 = { 81 39 50 45 00 00 }
+       $s4 = { B9 4D 5A 00 00 }
+       $s5 = { 8B C3 C1 E8 10 83 E9 10 0F B6 C0 }
+       $s6 = { 8B CA C1 E9 08 0F B6 D1 8B 4D F0 C1 E9 10 0F B6 C9 }
+       $s7 = { 8B 3C 96 03 F9 33 F6 }
+       $s8 = { 85 C0 74 02 FF D0 }
+   condition:
+       all of them
+}
+ssdeep Matches
+No matches found.
+
+PE Metadata
+Compile Date 2021-01-19 02:05:55-05:00
+Import Hash 8517cf209c905e801241690648f36a97
+PE Sections
+MD5 Name Raw Size Entropy
+f5922d8b7fdbacccee657c9937f420c0 header 1024 2.699721
+69651f6a58de87e3d888a2a5260db050 .text 68608 6.686025
+174a90746e521c22a6d696e5c1f071ee .rdata 27648 5.194163
+b3d0dd819218729fc349c63ce16b6252 .data 2560 2.221845
+bd90dc8684f5b3e44d9b014e286e1319 .rsrc 512 4.710061
+4c6042cddd17092933f1f367920cc3b6 .reloc 5120 6.461440
+Packers/Compilers/Cryptors
+Microsoft Visual C++ ?.?
+Description
+This artifact is a 32-bit executable file that is executed using the Microsoft Sysinternals remote administration tool, psexec.exe. When the program is executed it will attempt to load into memory a large embedded module that is decoded with a supplied key, 'xxxxxxxxxxxxxxxx'. The module is decoded in memory and checked to verify that it has a PE header. If the header is verified, the payload is executed.
+
+The payload is a 32-bit executable file that is used to encrypt files on the victim’s system to extort a ransom. When the ransomware is executed, it will enumerate files and folders on the system and encrypt files with the extensions, .txt, .chm, .dat, .ocx, .js, .tlb, .vbs, .sys, .lnk, .xml, .jpg, .log, .zip, .htm, .ini, .gif, .html, .css, and others. Key system files are not encrypted.
+
+The ransomware uses a public key encryption scheme called "NTRUEncrypt". To thwart the recovery of the data, it uses Windows Management Instrumentation (WMI) to enumerate Volume Shadow copies using the command “ select * from Win32_ShadowCopy” and then deletes copies by ID (Win32_ShadowCopy.ID). The malware will also encrypt files in the recovery folder at C:\Recovery. After the files are encrypted the program will write a ransom note to each folder and directory on the system called ‘read_me_unlock.txt’. The following is the content of the ransom note:
+
+---Begin Ransom Note---
+Hello, you were hacked, and your files were encrypted. ! Do not try to change the file extensions yourself, it may result in an error during decryption! Contact us and we can solve it all.
+
+If you start an independent recovery, or contact the police and other authorities, we will continue, but this time for all your clients. We also want to assure you of our seriousness, in case of refusal from the dialogue, we will use not one, 0 day, but several, also your source codes will be sold from auctions in 5 hands.
+
+Email contact: xxxxxxxxxxxx[@]protonmail.com
+
+OR
+
+-- Contact with us by method below
+1) Open this website in TOR browser: hxxp[:]//xxxxxxxxxxxxxxxx.onion/xxxxxxxxxxxxxxxxxxxx
+2) Follow instructions in chat.
+---End Ransom Note---
+
+ccacf4658ae778d02e4e55cd161b5a0772eb8b8eee62fed34e2d8f11db2cc4bc
+Tags
+backdoorloadertrojan
+
+Details
+Name WwanSvc.bat
+Size 247 bytes
+Type DOS batch file, ASCII text, with CRLF line terminators
+MD5 1f6495ea7606a15daa79be93070159a8
+SHA1 fdf9b1098480dd4145d7d39dc1b75fb6180e09ec
+SHA256 ccacf4658ae778d02e4e55cd161b5a0772eb8b8eee62fed34e2d8f11db2cc4bc
+SHA512 55abb0a936c3631e424748085b353e67ca8209006e92365c3fd3f256569f05ae99efeff818d1eefabba47fb11f59644c0e926027c30fbe076eee4dd899013815
+ssdeep 6:hsQLpjR9nyDzLgyKBM3S1R1KCsu2xKRYPdpVjku5HjJVGnyn:CQdjR9nYLgyaIS1PKC2l1pVh5HjJsny
+Entropy 5.360619
+Path C:\ProgramData\Microsoft\WwanSvc\
+Antivirus
+Ahnlab Backdoor/BAT.Runner
+Microsoft Security Essentials Trojan:BAT/Somrat
+YARA Rules
+No matches found.
+
+ssdeep Matches
+No matches found.
+
+Relationships
+ccacf4658a... Used 4de1bd4b1bb28ed0897b9d3c5d16a4b1442c7f53cb389cbed82af189696d3f40
+Description
+This artifact is a batch file. When executed it will invoke PowerShell, which decodes and executes a base64 encoded PowerShell script called "WwanSvc.txt" (4de1bd4b1bb28ed0897b9d3c5d16a4b1442c7f53cb389cbed82af189696d3f40) in the path C:\ProgramData\Microsoft\WwanSvc\.
+
+4de1bd4b1bb28ed0897b9d3c5d16a4b1442c7f53cb389cbed82af189696d3f40
+Tags
+loaderobfuscated
+
+Details
+Name WwanSvc.txt
+Size 9838 bytes
+Type ASCII text, with very long lines, with CRLF line terminators
+MD5 3c3770c42665416a9b3f2deda1056aed
+SHA1 b93122942f58693936f060224d1b798ff23fe547
+SHA256 4de1bd4b1bb28ed0897b9d3c5d16a4b1442c7f53cb389cbed82af189696d3f40
+SHA512 b9a04d2109746c37f73f1d651532e8ccf63b21756a9da920b0aab331deb9ad5c506e7a856e137a7965ec11c7742940583d5c197d7e472b23eb9c59476d9be9ae
+ssdeep 192:ZxFpwcjL3ceUZQR2Z1Pgk4HxE8TDEGJ5PWJ/LVkZCfjDR5CBtDKLODZAaxeS9gNm:ZxFpjMeUiygk4HyiHvujSZCbstuCrg0v
+Entropy 5.663394
+Path C:\ProgramData\Microsoft\WwanSvc\
+Antivirus
+No matches found.
+
+YARA Rules
+No matches found.
+
+ssdeep Matches
+No matches found.
+
+Relationships
+4de1bd4b1b... Used dec8655cdd7214daf9579ef481d0b0c6ed8120c120d3bd8ec27cb6e1874eb291
+4de1bd4b1b... Used d3d5e5a8a40f34fc8d89b2d74d89a4b101d8b95a79e990e3b4161282aa6aca32
+4de1bd4b1b... Used_By ccacf4658ae778d02e4e55cd161b5a0772eb8b8eee62fed34e2d8f11db2cc4bc
+Description
+This artifact is a Base64 encoded PowerShell script that is decoded and executed by WwanSvc.bat (ccacf4658ae778d02e4e55cd161b5a0772eb8b8eee62fed34e2d8f11db2cc4bc). The decoded content of the file follows:
+
+
+
+The script allows PowerShell to run without system restrictions while bypassing the Microsoft Antimalware program. Next, the script decodes the file "WwanSvc.c" (d3d5e5a8a40f34fc8d89b2d74d89a4b101d8b95a79e990e3b4161282aa6aca32) using a bitwise Exclusive OR (XOR) with a 256 byte key that is found in WwanSvc.a (dec8655cdd7214daf9579ef481d0b0c6ed8120c120d3bd8ec27cb6e1874eb291). Both WwanSvc.a and WwanSvc.c are located in C:\ProgramData\Microsoft\. The newly decoded script is then executed using the InvokeExpression command.
+
+dec8655cdd7214daf9579ef481d0b0c6ed8120c120d3bd8ec27cb6e1874eb291
+Tags
+loaderobfuscated
+
+Details
+Name WwanSvc.a
+Size 256 bytes
+Type data
+MD5 77b6cc5bca517f2d4c954d3d8c8c67df
+SHA1 ff9b181fe3f3b15b37ab8823fc47119c310fc51f
+SHA256 dec8655cdd7214daf9579ef481d0b0c6ed8120c120d3bd8ec27cb6e1874eb291
+SHA512 a70ff48b0a2a7d8bac1fb4b2df7b27a26e3ce974ae6927611e764a5ebe7892ab468b0a3537c47de7195f7787f5c781d686e4ece0f339174e51563b546cdbaf3a
+ssdeep 6:nZmAvoD0jmQw0fCRj6DoSbTrbBKgqtjQUOjv6g7RH:toojn1CRj6DoSbTrl1WQjig7RH
+Entropy 8.000000
+Path C:\ProgramData\Microsoft
+Antivirus
+No matches found.
+
+YARA Rules
+No matches found.
+
+ssdeep Matches
+No matches found.
+
+Relationships
+dec8655cdd... Used_By 4de1bd4b1bb28ed0897b9d3c5d16a4b1442c7f53cb389cbed82af189696d3f40
+dec8655cdd... Used_By c5a1dbb49ff72a69ac7c52b18e57a21527bc381077b1cea12c3a40e9e98ae6cd
+Description
+This artifact contains a 256 byte key that is used by the base64 encoded script in WwanSvc.txt to decode a new PowerShell script in WwanSvc.c (d3d5e5a8a40f34fc8d89b2d74d89a4b101d8b95a79e990e3b4161282aa6aca32). The key is also used to decode the reflectively loaded payload in WwanSvc.b (d3d5e5a8a40f34fc8d89b2d74d89a4b101d8b95a79e990e3b4161282aa6aca32).
+
+d3d5e5a8a40f34fc8d89b2d74d89a4b101d8b95a79e990e3b4161282aa6aca32
+Tags
+file-lessloaderobfuscated
+
+Details
+Name WwanSvc.c
+Size 121572 bytes
+Type data
+MD5 23fd1bca24a1f68293096ba9022bd0f1
+SHA1 2ab0d1092127268f30490523ec0aa3736416096b
+SHA256 d3d5e5a8a40f34fc8d89b2d74d89a4b101d8b95a79e990e3b4161282aa6aca32
+SHA512 37ac754b31bc0a8246111e621b544e5c00c6c8330b6858895e35368f39d973b63f24eb73dd0cc9964991f59ea6720c269a55192f4751b8dc7c7e8f958541d3d9
+ssdeep 3072:LkBl3uCZsVZFN41v7cV7PBbC4/ggW7hPe1G8zW6:Y2FGZ7ebNFW7hG1fL
+Entropy 7.998578
+Path C:\ProgramData\Microsoft
+Antivirus
+No matches found.
+
+YARA Rules
+No matches found.
+
+ssdeep Matches
+No matches found.
+
+Relationships
+d3d5e5a8a4... Used_By 4de1bd4b1bb28ed0897b9d3c5d16a4b1442c7f53cb389cbed82af189696d3f40
+Description
+This artifact is a XOR encoded PowerSploit reflective loader program. The program is decoded using the 256 byte key found in WwanSvc.a (dec8655cdd7214daf9579ef481d0b0c6ed8120c120d3bd8ec27cb6e1874eb291). The decoded content of the script follows:
+

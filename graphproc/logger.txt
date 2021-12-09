@@ -1,0 +1,7 @@
+2021-11-16T07:22:04.782-0600	INFO	Trace: main/graphprocessor/graphproc.func1
+2021-11-16T07:22:04.783-0600	INFO	Trace: main/graphprocessor/graphproc.func2
+2021-11-16T07:22:04.783-0600	INFO	Trace: main/graphprocessor/graphproc.SubGraph
+2021-11-16T07:22:04.783-0600	INFO	Trace: main/graphprocessor/graphproc.func4
+2021-11-16T07:22:04.783-0600	INFO	Trace: main/graphprocessor/graphproc.func5
+2021-11-16T07:22:04.783-0600	INFO	Trace: main/graphprocessor/graphproc.func3
+2021-11-16T07:22:04.783-0600	INFO	func3: Peter Piper Picked a peck of pickled peppers.func1.func2.func4.func5.func3
