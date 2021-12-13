@@ -171,7 +171,8 @@ func appendMap(dest, src interface{}) (interface{}, error) {
 
 //RegisterStage : register an application stage function for use in a graph
 func (g *Graphline) RegisterStage(sfunc func(*State, *Payload) error) error {
-	aname := strings.Split(funcName(sfunc), ".")[1]
+	fields := strings.Split(funcName(sfunc), ".")
+	aname := fields[len(fields)-1]
 	if _, aok := g.appstage[aname]; !aok {
 		g.appstage[aname] = sfunc
 	}
