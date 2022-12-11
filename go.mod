@@ -1,11 +1,12 @@
 module github.com/doctorub44/graphprocessor
 
-go 1.17
+go 1.19
 
 require (
-	github.com/aws/aws-sdk-go v1.42.18
-	github.com/barkimedes/go-deepcopy v0.0.0-20200817023428-a044a1957ca4
-	go.uber.org/zap v1.19.1
+	github.com/aws/aws-sdk-go v1.44.157
+	github.com/barkimedes/go-deepcopy v0.0.0-20220514131651-17c30cfc62df
+	github.com/maja42/goval v1.3.1
+	go.uber.org/zap v1.24.0
 )
 
 require (

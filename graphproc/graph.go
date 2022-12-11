@@ -1,6 +1,6 @@
 package graphproc
 
-//Vertex : graph vertex type
+// Vertex : graph vertex type
 type Vertex struct {
 	Name     string
 	Prev     []*Edge
@@ -11,15 +11,16 @@ type Vertex struct {
 	produced int
 }
 
-//Edge : graph edge type
+// Edge : graph edge type
 type Edge struct {
 	//In     *Vertex
 	Out      *Vertex
 	Epayload *Payload
 	Estate   *State
+	Selected bool
 }
 
-//Graph : graph type of vertexes and edges and execution path
+// Graph : graph type of vertexes and edges and execution path
 type Graph struct {
 	V       []*Vertex
 	E       []*Edge
@@ -30,7 +31,7 @@ type Graph struct {
 	forking []*Vertex
 }
 
-//NewGraph : create a new graph
+// NewGraph : create a new graph
 func NewGraph() *Graph {
 	g := new(Graph)
 	g.V = make([]*Vertex, 0, 32)
@@ -40,7 +41,7 @@ func NewGraph() *Graph {
 	return g
 }
 
-//NewVertex : create a new vertex
+// NewVertex : create a new vertex
 func (g *Graph) NewVertex(n string) *Vertex {
 	v := new(Vertex)
 	v.Name = n
@@ -51,16 +52,17 @@ func (g *Graph) NewVertex(n string) *Vertex {
 	return v
 }
 
-//NewEdge : create a new edge
+// NewEdge : create a new edge
 func (g *Graph) NewEdge() *Edge {
 	e := new(Edge)
 	e.Epayload = new(Payload)
 	e.Epayload.Raw = make([]byte, 0, 2048)
 	g.E = append(g.E, e)
+	e.Selected = true
 	return e
 }
 
-//NextVertex : get the next vertex in the path, returns nil if at the path end
+// NextVertex : get the next vertex in the path, returns nil if at the path end
 func (g *Graph) NextVertex() *Vertex {
 	if g.current == len(g.Path) {
 		return nil
@@ -70,7 +72,7 @@ func (g *Graph) NextVertex() *Vertex {
 	return v
 }
 
-//Link : link two vertexes by creating an edge from vertex 1 to vertex 2
+// Link : link two vertexes by creating an edge from vertex 1 to vertex 2
 func (g *Graph) Link(v1 *Vertex, v2 *Vertex) {
 	e := g.NewEdge()
 	e.Out = v2
@@ -78,7 +80,8 @@ func (g *Graph) Link(v1 *Vertex, v2 *Vertex) {
 	v2.Prev = append(v2.Prev, e)
 }
 
-//Path : build the execution path by walking through the graph depth first until a vertex is found with incomplete inputs
+// Path : build the execution path by walking through the graph depth first until a vertex is found with incomplete inputs
+//
 //	go back to the last vertex with a fork in the path and start the next walk
 func (g *Graph) BuildPath() {
 	if g.step == nil { //First step in building the path

@@ -154,6 +154,19 @@ func TestArguments(t *testing.T) {
 	fmt.Println(string(payload.Raw))
 }
 
+func TestMatrix(t *testing.T) {
+	graph := NewGraphline()
+
+	fatalError(t, graph.RegisterStage(SelectFields), "Unable to register SelectFields")
+	seq, err := graph.Sequence(`graph1:SelectFields{"fields":"0 2 4"}`)
+	fatalError(t, err, "Unable to create graph with arguments")
+	payload := new(Payload)
+	payload.Raw = make([]byte, 0, 2048)
+	payload.Raw = append(payload.Raw, []byte("1,2,3,4,5\n01,02,03,04,05\n001,002,003,004,005")...)
+	err = graph.Execute(seq[0], payload)
+	fmt.Println(string(payload.Raw))
+}
+
 func TestGraph(t *testing.T) {
 	EventInit()
 	graph := NewGraphline()
@@ -267,4 +280,32 @@ func TestFileStream(t *testing.T) {
 	}
 
 	time.Sleep(2000 * time.Millisecond)
+}
+
+func TestLambdaGraph(t *testing.T) {
+	EventInit()
+	graph := NewGraphline()
+
+	fatalError(t, graph.RegisterStage(AWSDownloadS3Bucket), "Unable to register AWSDownloadS3Bucket")
+	fatalError(t, graph.RegisterStage(NormalIOC), "Unable to register NormalIOC")
+	fatalError(t, graph.RegisterStage(UrlIOC), "Unable to register urlIOC")
+	fatalError(t, graph.RegisterStage(Ipv4IOC), "Unable to register Ipv4IOC")
+	fatalError(t, graph.RegisterStage(Ipv6IOC), "Unable to register Ipv4IOC")
+	fatalError(t, graph.RegisterStage(Md5IOC), "Unable to register Md5IOC")
+	fatalError(t, graph.RegisterStage(Sha1IOC), "Unable to register Sha1IOC")
+	fatalError(t, graph.RegisterStage(Sha256IOC), "Unable to register Sha256IOC")
+	fatalError(t, graph.RegisterStage(IOCtoData), "Unable to register IOCtoData")
+	fatalError(t, graph.RegisterStage(IOCDataToJson), "Unable to register IOCDataToJson")
+	graphid, err := graph.Sequence(`lambda:AWSDownloadS3Bucket{"region":"us-east-2","bucket":"lambdapipeprocessor","file":"bulkdata.txt"}|NormalIOC|UrlIOC|IOCtoData;NormalIOC|Ipv4IOC|IOCtoData;NormalIOC|Ipv6IOC|IOCtoData;NormalIOC|Md5IOC|IOCtoData;NormalIOC|Sha1IOC|IOCtoData;NormalIOC|Sha256IOC|IOCtoData;IOCtoData|IOCDataToJson`)
+	fatalError(t, err, "Unable to create graph")
+
+	if graphid != nil {
+		graph.PrintPath(graphid[0])
+		payload := new(Payload)
+		payload.Raw = make([]byte, 0, 2048)
+		fatalError(t, graph.Execute(graphid[0], payload), "Unable to execute graph")
+		fmt.Println(string(payload.Raw))
+
+		time.Sleep(2000 * time.Millisecond)
+	}
 }

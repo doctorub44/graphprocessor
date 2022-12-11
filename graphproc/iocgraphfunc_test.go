@@ -125,6 +125,20 @@ func TestSelectFields(t *testing.T) {
 	fmt.Println(string(payload.Raw))
 }
 
+func TestBulkSelectFields(t *testing.T) {
+	var config interface{}
+	data, _ := ioutil.ReadFile("bulkdata.txt")
+	payload := NewPayload()
+	state := new(State)
+	json.Unmarshal([]byte(`{"fields":"10"}`), &config)
+	state.config = config
+	payload.Raw = make([]byte, 0, 2048)
+	payload.Raw = append(payload.Raw, data...)
+	SelectFields(state, payload)
+	Ipv4IOC(state, payload)
+	fmt.Println(string(payload.Raw))
+}
+
 func TestCutFields(t *testing.T) {
 	var config interface{}
 

@@ -89,7 +89,7 @@ func (p *Parser) Parse() ([]string, []*Graph, error) {
 				tok, lit = p.scanIgnoreWhitespace()
 				if tok != IDENT && tok != DOUBLEQUOTE && tok != COMMA && tok != COLON && tok != ESCAPE &&
 					tok != LEFTBRACE && tok != RIGHTBRACE && tok != RIGHTBRACKET && tok != LEFTBRACKET &&
-					tok != PERIOD && tok != UNDERSCORE {
+					tok != PERIOD && tok != UNDERSCORE && tok != DASH && tok != SPACE {
 					return nil, nil, fmt.Errorf("found %q, expected valid json string", lit)
 				}
 				jsonlit = jsonlit + lit

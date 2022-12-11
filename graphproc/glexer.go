@@ -24,6 +24,7 @@ const (
 	COLON        //	:
 	PERIOD       // .
 	UNDERSCORE   // _
+	DASH         // -
 	COMMA        //	,
 	PIPE         //	|
 	DOUBLEQUOTE  //	"
@@ -32,6 +33,7 @@ const (
 	LEFTBRACKET  // [
 	RIGHTBRACKET //	]
 	ESCAPE       // \
+	SPACE        //
 )
 
 var eof = rune(0)
@@ -98,6 +100,10 @@ func (s *Scanner) Scan() (tok Token, lit string) {
 		return PERIOD, string(ch)
 	case '_':
 		return UNDERSCORE, string(ch)
+	case '-':
+		return DASH, string(ch)
+	case ' ':
+		return SPACE, string(ch)
 	case ':':
 		return COLON, string(ch)
 	case '|':

@@ -11,7 +11,7 @@ import (
 	deepcopy "github.com/barkimedes/go-deepcopy"
 )
 
-//Stage : graph execution stage type
+// Stage : graph execution stage type
 type Stage struct {
 	name    string
 	sfunc   func(*State, *Payload) error
@@ -20,19 +20,19 @@ type Stage struct {
 	postasp map[string]*Aspect
 }
 
-//State : graph stage state type
+// State : graph stage state type
 type State struct {
 	config   interface{}
 	appstate interface{}
 }
 
-//Payload : graph stage payload type
+// Payload : graph stage payload type
 type Payload struct {
 	Raw  []byte
 	Data interface{}
 }
 
-//Graphline : map with the set of graphs and map of application stages used in the graphs
+// Graphline : map with the set of graphs and map of application stages used in the graphs
 type Graphline struct {
 	graphs   map[string]*Graph
 	appstage map[string]func(*State, *Payload) error
@@ -40,7 +40,7 @@ type Graphline struct {
 
 var publicgraphs *Graphline
 
-//NewGraphline : create a new graphline
+// NewGraphline : create a new graphline
 func NewGraphline() Graphline {
 	var g Graphline
 	g.graphs = make(map[string]*Graph)
@@ -48,31 +48,31 @@ func NewGraphline() Graphline {
 	return g
 }
 
-//PublishGraphs : publish the graphline if needed elsewhere (subgraph execution stage)
+// PublishGraphs : publish the graphline if needed elsewhere (subgraph execution stage)
 func (g *Graphline) PublishGraphs() {
 	publicgraphs = g
 }
 
-//PublicGraphs : return the graphline that was published
+// PublicGraphs : return the graphline that was published
 func PublicGraphs() *Graphline {
 	return publicgraphs
 }
 
-//NewState : create a state type
+// NewState : create a state type
 func NewState() *State {
 	s := new(State)
 	s.config = make(map[string]interface{})
 	return s
 }
 
-//NewPayload : create a new payload type
+// NewPayload : create a new payload type
 func NewPayload() *Payload {
 	p := new(Payload)
 	p.Raw = make([]byte, 0, 2048)
 	return p
 }
 
-//NewStage : create and new graph execution stage type
+// NewStage : create and new graph execution stage type
 func NewStage() *Stage {
 	s := new(Stage)
 	s.preasp = make(map[string]*Aspect)
@@ -80,7 +80,7 @@ func NewStage() *Stage {
 	return s
 }
 
-//Config : get a field value when using the convention of map of interface values
+// Config : get a field value when using the convention of map of interface values
 func (s *State) Config(field string) (string, bool) {
 	if f, ok := s.config.(map[string]interface{})[field].(string); ok {
 		return f, true
@@ -88,12 +88,12 @@ func (s *State) Config(field string) (string, bool) {
 	return "", false
 }
 
-//SetConfig : set a field value when using the convention of map of interface values
+// SetConfig : set a field value when using the convention of map of interface values
 func (s *State) SetConfig(field string, value interface{}) {
 	s.config.(map[string]interface{})[field] = value
 }
 
-//funcName : returns a string for the name of a func in form <package>.<func name>
+// funcName : returns a string for the name of a func in form <package>.<func name>
 func funcName(i interface{}) string {
 	return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }
@@ -105,7 +105,7 @@ func funcName(i interface{}) string {
 //	return details.Name()
 //}
 
-//Copy : deep copy the src payload to the destination payload
+// Copy : deep copy the src payload to the destination payload
 func (p *Payload) Copy(dest, src *Payload) (*Payload, error) {
 	var err error
 	err = nil
@@ -116,7 +116,7 @@ func (p *Payload) Copy(dest, src *Payload) (*Payload, error) {
 	return dest, err
 }
 
-//Append : deep append the src payload to the destination payload. Data field must be map or slice
+// Append : deep append the src payload to the destination payload. Data field must be map or slice
 func (p *Payload) Append(dest, src *Payload) (*Payload, error) {
 	var err error
 	dest.Raw = append(dest.Raw, src.Raw...)
@@ -135,7 +135,7 @@ func (p *Payload) Append(dest, src *Payload) (*Payload, error) {
 	return dest, nil
 }
 
-//SetData : set the data field when using convention of map of interface values
+// SetData : set the data field when using convention of map of interface values
 func (p *Payload) SetData(key string, value interface{}) error {
 	if p.Data == nil {
 		p.Data = make(map[string]interface{})
@@ -144,7 +144,7 @@ func (p *Payload) SetData(key string, value interface{}) error {
 	return nil
 }
 
-//GetData : get the data field when using convention of map of interface values
+// GetData : get the data field when using convention of map of interface values
 func (p *Payload) GetData(key string) (interface{}, error) {
 	if value, ok := p.Data.(map[string]interface{})[key]; ok {
 		return value, nil
@@ -152,7 +152,7 @@ func (p *Payload) GetData(key string) (interface{}, error) {
 	return nil, errors.New("GetData: key not found in payload data")
 }
 
-//appendMap : does a deep append of the source map to destination map
+// appendMap : does a deep append of the source map to destination map
 func appendMap(dest, src interface{}) (interface{}, error) {
 	newmap := make(map[string]interface{})
 
@@ -169,7 +169,7 @@ func appendMap(dest, src interface{}) (interface{}, error) {
 	return newmap, nil
 }
 
-//RegisterStage : register an application stage function for use in a graph
+// RegisterStage : register an application stage function for use in a graph
 func (g *Graphline) RegisterStage(sfunc func(*State, *Payload) error) error {
 	fields := strings.Split(funcName(sfunc), ".")
 	aname := fields[len(fields)-1]
@@ -179,7 +179,7 @@ func (g *Graphline) RegisterStage(sfunc func(*State, *Payload) error) error {
 	return nil
 }
 
-//RegisterAspect : register an application aspect function for use in a graph
+// RegisterAspect : register an application aspect function for use in a graph
 func (g *Graphline) RegisterAspect(graphid string, action AspectAction, stage func(*State, *Payload) error, newasp *Aspect) error {
 	graph := g.graphs[graphid]
 	for _, vertex := range graph.Path {
@@ -236,7 +236,7 @@ func (g *Graphline) Sequence(graphspec string) ([]string, error) {
 	return gnames, nil
 }
 
-//PrintPath : print the path for diagnostic purposes
+// PrintPath : print the path for diagnostic purposes
 func (g *Graphline) PrintPath(graphid string) {
 	graph := g.graphs[graphid]
 	for _, v := range graph.Path {
@@ -244,7 +244,7 @@ func (g *Graphline) PrintPath(graphid string) {
 	}
 }
 
-//Execute : execute a graph based on its name
+// Execute : execute a graph based on its name
 func (g *Graphline) Execute(gname string, payload *Payload) error {
 	var err, serr error
 	graph := g.graphs[gname]
@@ -279,10 +279,12 @@ func (g *Graphline) Execute(gname string, payload *Payload) error {
 			}
 			//Execute the stage function
 			if serr = stage.sfunc(stage.state, payload); serr == nil {
-				for _, edge := range vertex.Next { // Copy the output to each output edge
-					edge.Epayload, err = payload.Copy(edge.Epayload, payload)
-					if err != nil {
-						return err
+				for _, edge := range vertex.Next { //Copy the output to each output edge selected, all edges by default
+					if edge.Selected {
+						edge.Epayload, err = payload.Copy(edge.Epayload, payload)
+						if err != nil {
+							return err
+						}
 					}
 					edge.Out.produced++
 				}
@@ -302,7 +304,7 @@ func (g *Graphline) Execute(gname string, payload *Payload) error {
 	return nil
 }
 
-//SetState : deprecated
+// SetState : deprecated
 func (g *Graphline) SetState(gname string, name string, state *State) (int, error) {
 	graph := g.graphs[gname]
 	for i, v := range graph.V {
@@ -316,7 +318,7 @@ func (g *Graphline) SetState(gname string, name string, state *State) (int, erro
 	return -1, errors.New("SetStage: no registered stage found for " + name)
 }
 
-//CallStage : deprecated
+// CallStage : deprecated
 func (g *Graphline) CallStage(graphid string, name string, state *State) (int, error) {
 	var err error
 	graph := g.graphs[graphid]
@@ -330,7 +332,7 @@ func (g *Graphline) CallStage(graphid string, name string, state *State) (int, e
 	return -1, errors.New("CallStage: no registered stage found for " + name)
 }
 
-//RunAspects : run the aspects for a graph stage
+// RunAspects : run the aspects for a graph stage
 func (g *Graphline) RunAspects(name string, mesg []byte, scope *Scope, asp map[string]*Aspect) error {
 	for _, aspect := range asp {
 		if aspect != nil {
@@ -344,7 +346,7 @@ func (g *Graphline) RunAspects(name string, mesg []byte, scope *Scope, asp map[s
 	return nil
 }
 
-//BuildState
+// BuildState
 func (s *Stage) BuildState(cfg interface{}) {
 	if s.state == nil {
 		s.state = new(State)
