@@ -26,3 +26,35 @@ func TestRule(t *testing.T) {
 		fatalError(t, nil, "Unable to evaluate string rule")
 	}
 }
+
+func TestSelect(t *testing.T) {
+
+	state := new(State)
+	cfg := NewSelectCfg()
+	for i := 0; i < 3; i++ {
+		cfg.AddEdge(new(Edge))
+	}
+
+	cfg.AddCond("A == `String A`")
+	cfg.AddCond("A == `String B`")
+	cfg.AddCond("B == `String B`")
+	state.config = cfg
+	payload := new(Payload)
+	arg := NewArg()
+	arg.AddArg("A", "String A")
+	arg.AddArg("B", "String B")
+	payload.SetData("argument", arg)
+	err := Select(state, payload)
+	if err != nil {
+		fatalError(t, nil, "Unable to switch")
+	}
+	if cfg.edges[0].Selected != true {
+		fatalError(t, nil, "Edge not selected")
+	}
+	if cfg.edges[1].Selected != false {
+		fatalError(t, nil, "Edge selected")
+	}
+	if cfg.edges[2].Selected != true {
+		fatalError(t, nil, "Edge not selected")
+	}
+}
