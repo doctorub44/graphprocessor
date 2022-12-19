@@ -1,0 +1,33 @@
+
+Name: TestGraph
+Vertex:
+  - Name: a 
+    Param: '{"k1": 10, "k2": "foobar"}'
+    To:
+      - Name: b
+        To:
+          - Name: c
+            To:
+              - Name: f
+                To:
+                  - Name: h
+                    To:
+                      - Name: k
+          - Name: d
+            To:
+              - Name: k
+          - Name: e 
+            To:
+              - Name: Select
+                Condition:
+                  - '"A" == "String A"'
+                  - '"B" == "String B"'
+                To:
+                  - Name: i
+                    To:
+                      - Name: l
+                  - Name: j
+                    To:
+                      - Name: l
+
+

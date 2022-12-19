@@ -4,12 +4,6 @@ import (
 	"github.com/maja42/goval"
 )
 
-//  "graph1: a | b; b | d | k; b | c | f | h | k; b | e | g; g | i | l; g | j | l; graph2:k|l|m{\"k1\":\"v1\", \"k2\":\"v2\"}"
-//
-// a > b > c
-//		 > d
-//		 > e
-
 type Condition struct {
 	expr string
 	eval *goval.Evaluator
@@ -60,6 +54,11 @@ func Select(st *State, payload *Payload) error {
 	a, err := payload.GetData("argument")
 	if err != nil {
 		return err
+	}
+
+	//Default for an edge if no condition is true - by default write the ouput to every edge
+	for _, e := range config.edges {
+		e.Selected = true
 	}
 
 	for i, c := range config.conds {
