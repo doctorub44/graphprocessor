@@ -22,6 +22,7 @@ type Edge struct {
 
 // Graph : graph type of vertexes and edges and execution path
 type Graph struct {
+	Name    string
 	V       []*Vertex
 	E       []*Edge
 	Path    []*Vertex
@@ -39,6 +40,10 @@ func NewGraph() *Graph {
 	g.Path = make([]*Vertex, 0, 32)
 	g.forking = make([]*Vertex, 0, 32)
 	return g
+}
+
+func (g *Graph) SetName(name string) {
+	g.Name = name
 }
 
 // NewVertex : create a new vertex
