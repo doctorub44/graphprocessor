@@ -34,18 +34,18 @@ func GraphYaml(file string) *GraphY {
 	return gyaml
 }
 
-func YamlToGraph(gyaml *GraphY) *Graph {
+func YamlToGraph(gy *GraphY) *Graph {
 	var v1 *Vertex
 	var ok bool
 	g := NewGraph()
-	g.SetName(gyaml.Name)
+	g.SetName(gy.Name)
 	vertexmap := make(map[string]*Vertex)
-	for _, yamlv := range gyaml.Vertex {
-		if v1, ok = vertexmap[yamlv.Name]; !ok {
-			v1 = g.NewVertex(yamlv.Name)
-			vertexmap[yamlv.Name] = v1
+	for _, vy := range gy.Vertex {
+		if v1, ok = vertexmap[vy.Name]; !ok {
+			v1 = g.NewVertex(vy.Name)
+			vertexmap[vy.Name] = v1
 		}
-		for _, tov := range yamlv.To {
+		for _, tov := range vy.To {
 			ToNext(g, vertexmap, v1, &tov)
 		}
 	}
@@ -53,15 +53,15 @@ func YamlToGraph(gyaml *GraphY) *Graph {
 	return g
 }
 
-func ToNext(g *Graph, vertexmap map[string]*Vertex, v1 *Vertex, yamlv *VertexY) {
+func ToNext(g *Graph, vertexmap map[string]*Vertex, v1 *Vertex, vy *VertexY) {
 	var v2 *Vertex
 	var ok bool
-	if v2, ok = vertexmap[yamlv.Name]; !ok {
-		v2 = g.NewVertex(yamlv.Name)
-		vertexmap[yamlv.Name] = v2
+	if v2, ok = vertexmap[vy.Name]; !ok {
+		v2 = g.NewVertex(vy.Name)
+		vertexmap[vy.Name] = v2
 	}
 	g.Link(v1, v2)
-	for _, tov := range yamlv.To {
+	for _, tov := range vy.To {
 		ToNext(g, vertexmap, v2, &tov)
 	}
 }
