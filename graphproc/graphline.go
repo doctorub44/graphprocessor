@@ -365,7 +365,7 @@ func (s *Stage) GetConfig() any {
 }
 
 // GetSelect
-func (s *Stage) GetSelect() any {
+func (s *Stage) GetSelect() *SelectCfg {
 	if s.state != nil {
 		return s.state.selectcfg
 	}
@@ -373,9 +373,9 @@ func (s *Stage) GetSelect() any {
 }
 
 // SetSelect
-func (s *Stage) SetSelect(selcfg any) {
+func (s *Stage) SetSelect(selcfg *SelectCfg) {
 	if s.state != nil {
-		s.state.selectcfg = selcfg.(*SelectCfg)
+		s.state.selectcfg = selcfg
 	}
 }
 

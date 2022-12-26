@@ -20,6 +20,18 @@ type GraphY struct {
 	Vertex []VertexY `json:"Vertex"`
 }
 
+func NewGraphY(name string) *GraphY {
+	gy := new(GraphY)
+	gy.Name = name
+	return gy
+}
+
+func NewVertexY(name string) *VertexY {
+	vy := new(VertexY)
+	vy.Name = name
+	return vy
+}
+
 func GraphYaml(file string) *GraphY {
 	gyaml := new(GraphY)
 	data, err := os.ReadFile(file)
@@ -36,26 +48,11 @@ func GraphYaml(file string) *GraphY {
 }
 
 func YamlToGraph(gy *GraphY) *Graph {
-	var v1 *Vertex
-	var ok bool
 	g := NewGraph()
 	g.SetName(gy.Name)
 	vertexmap := make(map[string]*Vertex)
 	for _, vy := range gy.Vertex {
-		if v1, ok = vertexmap[vy.Name]; !ok {
-			v1 = g.NewVertex(vy.Name)
-			if vy.Param != "" {
-				v1.Vstage.BuildState(vy.Param)
-			}
-			if vy.Condition != nil {
-				selcfg := NewSelectCfg()
-				for _, c := range vy.Condition {
-					selcfg.AddCond(c)
-				}
-				v1.SetSelect(selcfg)
-			}
-			vertexmap[vy.Name] = v1
-		}
+		v1, _ := MakeVertex(g, vertexmap, &vy)
 		for _, tov := range vy.To {
 			ToNext(g, vertexmap, v1, &tov)
 		}
@@ -65,6 +62,14 @@ func YamlToGraph(gy *GraphY) *Graph {
 }
 
 func ToNext(g *Graph, vertexmap map[string]*Vertex, v1 *Vertex, vy *VertexY) {
+	v2, _ := MakeVertex(g, vertexmap, vy)
+	g.Link(v1, v2)
+
+	for _, tov := range vy.To {
+		ToNext(g, vertexmap, v2, &tov)
+	}
+}
+func MakeVertex(g *Graph, vertexmap map[string]*Vertex, vy *VertexY) (*Vertex, bool) {
 	var v2 *Vertex
 	var ok bool
 	if v2, ok = vertexmap[vy.Name]; !ok {
@@ -72,7 +77,7 @@ func ToNext(g *Graph, vertexmap map[string]*Vertex, v1 *Vertex, vy *VertexY) {
 		if vy.Param != "" {
 			var config any
 			json.Unmarshal([]byte(vy.Param), &config)
-			v2.Vstage.BuildState(config)
+			v2.SetConfig(config)
 		}
 		if vy.Condition != nil {
 			selcfg := NewSelectCfg()
@@ -83,32 +88,15 @@ func ToNext(g *Graph, vertexmap map[string]*Vertex, v1 *Vertex, vy *VertexY) {
 		}
 		vertexmap[vy.Name] = v2
 	}
-	g.Link(v1, v2)
-
-	for _, tov := range vy.To {
-		ToNext(g, vertexmap, v2, &tov)
-	}
+	return v2, ok
 }
 
 func GraphToYaml(g *Graph) *GraphY {
-	var vy *VertexY
-	var ok bool
 	vertexmap := make(map[string]*VertexY)
-	gy := new(GraphY)
-	gy.Name = g.Name
+	gy := NewGraphY(g.Name)
+
 	for _, v := range g.V {
-		if _, ok = vertexmap[v.Name]; !ok {
-			vy = new(VertexY)
-			vy.Name = v.Name
-			if v.GetConfig() != nil {
-				config, _ := json.Marshal(v.GetConfig())
-				vy.Param = string(config)
-			}
-			if selcfg := v.GetSelect(); selcfg != nil {
-				for _, c := range selcfg.conds {
-					vy.Condition = append(vy.Condition, c.expr)
-				}
-			}
+		if vy, ok := MakeVertexY(vertexmap, v); !ok {
 			for _, edge := range v.Next {
 				ToNextY(vertexmap, vy, edge.Out)
 			}
@@ -119,11 +107,18 @@ func GraphToYaml(g *Graph) *GraphY {
 }
 
 func ToNextY(vertexmap map[string]*VertexY, vy *VertexY, v *Vertex) {
+	newvy, _ := MakeVertexY(vertexmap, v)
+	for _, edge := range v.Next {
+		ToNextY(vertexmap, newvy, edge.Out)
+	}
+	vy.To = append(vy.To, *newvy)
+}
+
+func MakeVertexY(vertexmap map[string]*VertexY, v *Vertex) (*VertexY, bool) {
 	var newvy *VertexY
 	var ok bool
 	if newvy, ok = vertexmap[v.Name]; !ok {
-		newvy = new(VertexY)
-		newvy.Name = v.Name
+		newvy = NewVertexY(v.Name)
 		if cfg := v.GetConfig(); cfg != nil {
 			config, _ := json.Marshal(cfg)
 			newvy.Param = string(config)
@@ -135,10 +130,7 @@ func ToNextY(vertexmap map[string]*VertexY, vy *VertexY, v *Vertex) {
 		}
 		vertexmap[v.Name] = newvy
 	}
-	for _, edge := range v.Next {
-		ToNextY(vertexmap, newvy, edge.Out)
-	}
-	vy.To = append(vy.To, *newvy)
+	return newvy, ok
 }
 
 func (gy *GraphY) Marshal() string {
