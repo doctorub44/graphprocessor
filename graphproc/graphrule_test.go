@@ -38,7 +38,7 @@ func TestSelect(t *testing.T) {
 	cfg.AddCond("A == `String A`")
 	cfg.AddCond("A == `String B`")
 	cfg.AddCond("B == `String B`")
-	state.config = cfg
+	state.selectcfg = cfg
 	payload := new(Payload)
 	arg := NewArg()
 	arg.AddArg("A", "String A")

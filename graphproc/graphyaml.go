@@ -1,6 +1,7 @@
 package graphproc
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -43,6 +44,16 @@ func YamlToGraph(gy *GraphY) *Graph {
 	for _, vy := range gy.Vertex {
 		if v1, ok = vertexmap[vy.Name]; !ok {
 			v1 = g.NewVertex(vy.Name)
+			if vy.Param != "" {
+				v1.Vstage.BuildState(vy.Param)
+			}
+			if vy.Condition != nil {
+				selcfg := NewSelectCfg()
+				for _, c := range vy.Condition {
+					selcfg.AddCond(c)
+				}
+				v1.SetSelect(selcfg)
+			}
 			vertexmap[vy.Name] = v1
 		}
 		for _, tov := range vy.To {
@@ -58,9 +69,22 @@ func ToNext(g *Graph, vertexmap map[string]*Vertex, v1 *Vertex, vy *VertexY) {
 	var ok bool
 	if v2, ok = vertexmap[vy.Name]; !ok {
 		v2 = g.NewVertex(vy.Name)
+		if vy.Param != "" {
+			var config any
+			json.Unmarshal([]byte(vy.Param), &config)
+			v2.Vstage.BuildState(config)
+		}
+		if vy.Condition != nil {
+			selcfg := NewSelectCfg()
+			for _, c := range vy.Condition {
+				selcfg.AddCond(c)
+			}
+			v2.SetSelect(selcfg)
+		}
 		vertexmap[vy.Name] = v2
 	}
 	g.Link(v1, v2)
+
 	for _, tov := range vy.To {
 		ToNext(g, vertexmap, v2, &tov)
 	}
@@ -76,7 +100,15 @@ func GraphToYaml(g *Graph) *GraphY {
 		if _, ok = vertexmap[v.Name]; !ok {
 			vy = new(VertexY)
 			vy.Name = v.Name
-			vertexmap[v.Name] = vy
+			if v.GetConfig() != nil {
+				config, _ := json.Marshal(v.GetConfig())
+				vy.Param = string(config)
+			}
+			if selcfg := v.GetSelect(); selcfg != nil {
+				for _, c := range selcfg.conds {
+					vy.Condition = append(vy.Condition, c.expr)
+				}
+			}
 			for _, edge := range v.Next {
 				ToNextY(vertexmap, vy, edge.Out)
 			}
@@ -92,6 +124,15 @@ func ToNextY(vertexmap map[string]*VertexY, vy *VertexY, v *Vertex) {
 	if newvy, ok = vertexmap[v.Name]; !ok {
 		newvy = new(VertexY)
 		newvy.Name = v.Name
+		if cfg := v.GetConfig(); cfg != nil {
+			config, _ := json.Marshal(cfg)
+			newvy.Param = string(config)
+		}
+		if selcfg := v.GetSelect(); selcfg != nil {
+			for _, c := range selcfg.conds {
+				newvy.Condition = append(newvy.Condition, c.expr)
+			}
+		}
 		vertexmap[v.Name] = newvy
 	}
 	for _, edge := range v.Next {

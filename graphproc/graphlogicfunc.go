@@ -45,27 +45,28 @@ func (a *Argument) AddArg(key, val string) {
 func (c *SelectCfg) AddCond(cond string) {
 	c.conds = append(c.conds, NewCondition(cond))
 }
+
 func (c *SelectCfg) AddEdge(e *Edge) {
 	c.edges = append(c.edges, e)
 }
 
 func Select(st *State, payload *Payload) error {
-	config := st.config.(*SelectCfg)
+	selcfg := st.selectcfg
 	a, err := payload.GetData("argument")
 	if err != nil {
 		return err
 	}
 
 	//Default for an edge if no condition is true - by default write the ouput to every edge
-	for _, e := range config.edges {
+	for _, e := range selcfg.edges {
 		e.Selected = true
 	}
 
-	for i, c := range config.conds {
+	for i, c := range selcfg.conds {
 		if result, _ := c.Rule(a.(*Argument).args); result {
-			config.edges[i].Selected = true
+			selcfg.edges[i].Selected = true
 		} else {
-			config.edges[i].Selected = false
+			selcfg.edges[i].Selected = false
 		}
 	}
 	return nil

@@ -22,8 +22,9 @@ type Stage struct {
 
 // State : graph stage state type
 type State struct {
-	config   interface{}
-	appstate interface{}
+	config    any
+	appstate  any
+	selectcfg *SelectCfg
 }
 
 // Payload : graph stage payload type
@@ -75,6 +76,7 @@ func NewPayload() *Payload {
 // NewStage : create and new graph execution stage type
 func NewStage() *Stage {
 	s := new(Stage)
+	s.state = new(State)
 	s.preasp = make(map[string]*Aspect)
 	s.postasp = make(map[string]*Aspect)
 	return s
@@ -352,4 +354,36 @@ func (s *Stage) BuildState(cfg interface{}) {
 		s.state = new(State)
 	}
 	s.state.config = cfg
+}
+
+// GetConfig
+func (s *Stage) GetConfig() any {
+	if s.state != nil {
+		return s.state.config
+	}
+	return nil
+}
+
+// GetSelect
+func (s *Stage) GetSelect() any {
+	if s.state != nil {
+		return s.state.selectcfg
+	}
+	return nil
+}
+
+// SetSelect
+func (s *Stage) SetSelect(selcfg any) {
+	if s.state != nil {
+		s.state.selectcfg = selcfg.(*SelectCfg)
+	}
+}
+
+// SelectEdge
+func (s *Stage) SelectEdge(e *Edge) {
+	if s.state != nil {
+		if s.state.selectcfg != nil {
+			s.state.selectcfg.AddEdge(e)
+		}
+	}
 }

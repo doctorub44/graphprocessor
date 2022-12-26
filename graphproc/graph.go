@@ -83,6 +83,7 @@ func (g *Graph) Link(v1 *Vertex, v2 *Vertex) {
 	e.Out = v2
 	v1.Next = append(v1.Next, e)
 	v2.Prev = append(v2.Prev, e)
+	v1.SelectEdge(e)
 }
 
 // Path : build the execution path by walking through the graph depth first until a vertex is found with incomplete inputs
